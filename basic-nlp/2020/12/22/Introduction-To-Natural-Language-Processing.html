@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Topic 01: Introduction to Natural Language Proccessing | Bits and Bytes of NLP</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Topic 01: Introduction to Natural Language Proccessing" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="NLP concepts and work flow" />
+<meta property="og:description" content="NLP concepts and work flow" />
+<link rel="canonical" href="https://shubhangidabral13.github.io/Bits-and-Bytes-of-NLP/basic-nlp/2020/12/22/Introduction-To-Natural-Language-Processing.html" />
+<meta property="og:url" content="https://shubhangidabral13.github.io/Bits-and-Bytes-of-NLP/basic-nlp/2020/12/22/Introduction-To-Natural-Language-Processing.html" />
+<meta property="og:site_name" content="Bits and Bytes of NLP" />
+<meta property="og:image" content="https://shubhangidabral13.github.io/Bits-and-Bytes-of-NLP/images/logo/logo.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-12-22T00:00:00-06:00" />
+<script type="application/ld+json">
+{"url":"https://shubhangidabral13.github.io/Bits-and-Bytes-of-NLP/basic-nlp/2020/12/22/Introduction-To-Natural-Language-Processing.html","@type":"BlogPosting","headline":"Topic 01: Introduction to Natural Language Proccessing","dateModified":"2020-12-22T00:00:00-06:00","datePublished":"2020-12-22T00:00:00-06:00","image":"https://shubhangidabral13.github.io/Bits-and-Bytes-of-NLP/images/logo/logo.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://shubhangidabral13.github.io/Bits-and-Bytes-of-NLP/basic-nlp/2020/12/22/Introduction-To-Natural-Language-Processing.html"},"description":"NLP concepts and work flow","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/Bits-and-Bytes-of-NLP/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://shubhangidabral13.github.io/Bits-and-Bytes-of-NLP/feed.xml" title="Bits and Bytes of NLP" /><link rel="shortcut icon" type="image/x-icon" href="/Bits-and-Bytes-of-NLP/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" /><script src="https://hypothes.is/embed.js" async></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/Bits-and-Bytes-of-NLP/">Bits and Bytes of NLP</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/Bits-and-Bytes-of-NLP/about/">About Me</a><a class="page-link" href="/Bits-and-Bytes-of-NLP/search/">Search</a><a class="page-link" href="/Bits-and-Bytes-of-NLP/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Topic 01: Introduction to Natural Language Proccessing</h1><p class="page-description">NLP concepts and work flow</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-12-22T00:00:00-06:00" itemprop="datePublished">
+        Dec 22, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      5 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/Bits-and-Bytes-of-NLP/categories/#basic-nlp">basic-nlp</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          <div class="px-2">
+
+    <a href="https://github.com/ShubhangiDabral13/Bits-and-Bytes-of-NLP/tree/master/_notebooks/2020-12-22-Introduction-To-Natural-Language-Processing.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/Bits-and-Bytes-of-NLP/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/ShubhangiDabral13/Bits-and-Bytes-of-NLP/master?filepath=_notebooks%2F2020-12-22-Introduction-To-Natural-Language-Processing.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/Bits-and-Bytes-of-NLP/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/ShubhangiDabral13/Bits-and-Bytes-of-NLP/blob/master/_notebooks/2020-12-22-Introduction-To-Natural-Language-Processing.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/Bits-and-Bytes-of-NLP/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#What-Is-NLP?">What Is NLP? </a></li>
+<li class="toc-entry toc-h1"><a href="#How-NLP-is-applicable-in-today's-industries?">How NLP is applicable in today&#39;s industries? </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#1).Language-modeling">1).Language modeling </a></li>
+<li class="toc-entry toc-h2"><a href="#2).Text-classification">2).Text classification </a></li>
+<li class="toc-entry toc-h2"><a href="#3).Information-extraction">3).Information extraction </a></li>
+<li class="toc-entry toc-h2"><a href="#4).Information-retrieval">4).Information retrieval </a></li>
+<li class="toc-entry toc-h2"><a href="#5).Conversational-agent">5).Conversational agent </a></li>
+<li class="toc-entry toc-h2"><a href="#6).Text-summarization">6).Text summarization </a></li>
+<li class="toc-entry toc-h2"><a href="#7).Question-answering">7).Question answering </a></li>
+<li class="toc-entry toc-h2"><a href="#8).Machine-translation">8).Machine translation </a></li>
+<li class="toc-entry toc-h2"><a href="#9).Topic-modeling">9).Topic modeling </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#Approaches-to-NLP">Approaches to NLP </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#Heuristic-Based-NLP">Heuristic-Based NLP </a></li>
+<li class="toc-entry toc-h2"><a href="#Machine-Learning-in-NLP">Machine Learning in NLP </a></li>
+<li class="toc-entry toc-h2"><a href="#Deep-Learning-for-NLP">Deep Learning for NLP </a></li>
+</ul>
+</li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2020-12-22-Introduction-To-Natural-Language-Processing.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><figure>
+  
+    <img class="docimage" src="/Bits-and-Bytes-of-NLP/images/copied_from_nb/my_icons/topic_01.1.png" alt="">
+    
+    
+</figure>
+</p>
+<h1 id="What-Is-NLP?">
+<a class="anchor" href="#What-Is-NLP?" aria-hidden="true"><span class="octicon octicon-link"></span></a>What Is NLP?<a class="anchor-link" href="#What-Is-NLP?"> </a>
+</h1>
+<p>Everything we express (either verbally or in written) carries a huge amount of information. The  topic we choose, our tone, our selection of words, everything adds some type of information that can be interpreted and value can be extracted from it. In theory, we can understand and even predict human behaviour using that information.</p>
+<p>Even for centuries a large amount of data has been stored in books, manuscripts and as data is a boon in(IT sector) today's world so using this data may act as a helping hand for  making our technology more innovative.</p>
+<p>Well, it's not that as simple as it seems. There is some issue while handling these types of data.</p>
+<p><strong>Data is unstructured:</strong> Data generated from conversations, declarations, or even tweets are examples of unstructured data. Unstructured data doesn’t fit neatly into the traditional row and column structure of relational databases, and represent the vast majority of data available in the actual world. It is messy and hard to manipulate.</p>
+<p><strong>A computer only understands numeric data:</strong>  that data generated from books, speech, text, etc are not in numeric form hence it's difficult for a computer to interpret these data.</p>
+<p>Here where Natural Language Processing comes to the rescue.</p>
+<p><strong>Natural Language</strong> is a language that we humans can understand e.g. Hindi, English, Spanish, etc and these languages are not understood by computer hence for a computer to understand these languages they need to <strong>process</strong> it and convert it into the form which the computer can interpret so the term Natural Language Processing is coiled.</p>
+<p><figure>
+  
+    <img class="docimage" src="/Bits-and-Bytes-of-NLP/images/copied_from_nb/my_icons/topic_01.2.png" alt="">
+    
+    
+</figure>
+</p>
+<h1 id="How-NLP-is-applicable-in-today's-industries?">
+<a class="anchor" href="#How-NLP-is-applicable-in-today's-industries?" aria-hidden="true"><span class="octicon octicon-link"></span></a>How NLP is applicable in today's industries?<a class="anchor-link" href="#How-NLP-is-applicable-in-today's-industries?"> </a>
+</h1>
+<p>There is a collection of fundamental tasks that appear frequently across various NLP projects.</p>
+<h2 id="1).Language-modeling">
+<a class="anchor" href="#1).Language-modeling" aria-hidden="true"><span class="octicon octicon-link"></span></a>1).Language modeling<a class="anchor-link" href="#1).Language-modeling"> </a>
+</h2>
+<p>This is the task of predicting what the next word in a sentence will be based on the history of previous words. The goal of this task is to learn the probability of a sequence of words appearing in a given language. Language modeling is useful for buildings solutions for a wide variety of problems, such as speech recognition, optical character recognition, handwriting recognition, machine translation, and spelling correction.</p>
+<h2 id="2).Text-classification">
+<a class="anchor" href="#2).Text-classification" aria-hidden="true"><span class="octicon octicon-link"></span></a>2).Text classification<a class="anchor-link" href="#2).Text-classification"> </a>
+</h2>
+<p>This is the task of bucketing the text into a known set of categories based on its content. Text classification is by far the most popular task in NLP and is used in a variety of tools, from email spam identification to sentiment analysis.</p>
+<h2 id="3).Information-extraction">
+<a class="anchor" href="#3).Information-extraction" aria-hidden="true"><span class="octicon octicon-link"></span></a>3).Information extraction<a class="anchor-link" href="#3).Information-extraction"> </a>
+</h2>
+<p>As the name indicates, this is the task of extracting relevant information from text, such as calendar events from emails or the names of people mentioned in a social media post.</p>
+<h2 id="4).Information-retrieval">
+<a class="anchor" href="#4).Information-retrieval" aria-hidden="true"><span class="octicon octicon-link"></span></a>4).Information retrieval<a class="anchor-link" href="#4).Information-retrieval"> </a>
+</h2>
+<p>This is the task of finding documents relevant to a user query from a large collection. Applications like Google Search are well-known use cases of information retrieval.</p>
+<h2 id="5).Conversational-agent">
+<a class="anchor" href="#5).Conversational-agent" aria-hidden="true"><span class="octicon octicon-link"></span></a>5).Conversational agent<a class="anchor-link" href="#5).Conversational-agent"> </a>
+</h2>
+<p>This is the task of building dialogue systems that can converse in human languages. Alexa, Siri, etc., are some common applications of this task.</p>
+<h2 id="6).Text-summarization">
+<a class="anchor" href="#6).Text-summarization" aria-hidden="true"><span class="octicon octicon-link"></span></a>6).Text summarization<a class="anchor-link" href="#6).Text-summarization"> </a>
+</h2>
+<p>This task aims to create short summaries of longer documents while retaining the core content and preserving the overall meaning of the text.</p>
+<h2 id="7).Question-answering">
+<a class="anchor" href="#7).Question-answering" aria-hidden="true"><span class="octicon octicon-link"></span></a>7).Question answering<a class="anchor-link" href="#7).Question-answering"> </a>
+</h2>
+<p>This is the task of building a system that can automatically answer questions posed in natural language.</p>
+<h2 id="8).Machine-translation">
+<a class="anchor" href="#8).Machine-translation" aria-hidden="true"><span class="octicon octicon-link"></span></a>8).Machine translation<a class="anchor-link" href="#8).Machine-translation"> </a>
+</h2>
+<p>This is the task of converting a piece of text from one language to another. Tools like Google Translate are common applications of this task.</p>
+<h2 id="9).Topic-modeling">
+<a class="anchor" href="#9).Topic-modeling" aria-hidden="true"><span class="octicon octicon-link"></span></a>9).Topic modeling<a class="anchor-link" href="#9).Topic-modeling"> </a>
+</h2>
+<p>This is the task of uncovering the topical structure of a large collection of documents. Topic modeling is a common text mining tool and is used in a wide range of domains, from literature to bioinformatics.</p>
+<h1 id="Approaches-to-NLP">
+<a class="anchor" href="#Approaches-to-NLP" aria-hidden="true"><span class="octicon octicon-link"></span></a>Approaches to NLP<a class="anchor-link" href="#Approaches-to-NLP"> </a>
+</h1>
+<p>The different approaches used to solve NLP problems commonly fall into three categories: heuristics, machine learning, and deep learning.</p>
+<h2 id="Heuristic-Based-NLP">
+<a class="anchor" href="#Heuristic-Based-NLP" aria-hidden="true"><span class="octicon octicon-link"></span></a>Heuristic-Based NLP<a class="anchor-link" href="#Heuristic-Based-NLP"> </a>
+</h2>
+<p>Similar to other early AI systems, early attempts at designing NLP systems were based on building rules for the task at hand. This required that the developers had some expertise in the domain to formulate rules that could be incorporated into a program. Such systems also required resources like dictionaries and thesauruses, typically compiled and digitized over a period of time.</p>
+<ul>
+<li>
+<p>Advantage :</p>
+<ul>
+<li>
+<p>It's easily adaptable</p>
+</li>
+<li>
+<p>Simple to debug</p>
+</li>
+<li>
+<p>Enormous training corpus not needed</p>
+</li>
+<li>
+<p>Comprehends the language</p>
+</li>
+<li>
+<p>High perfection</p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>Disadvantage :</p>
+<ul>
+<li>
+<p>Proficient developers and linguists required</p>
+</li>
+<li>
+<p>Slow parser development</p>
+</li>
+<li>
+<p>Moderate recall (coverage)</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Machine-Learning-in-NLP">
+<a class="anchor" href="#Machine-Learning-in-NLP" aria-hidden="true"><span class="octicon octicon-link"></span></a>Machine Learning in NLP<a class="anchor-link" href="#Machine-Learning-in-NLP"> </a>
+</h2>
+<p>Machine learning techniques are applied to textual data just as they’re used on other forms of data, such as images, speech, and structure data. Supervised machine learning techniques such as classification and regression methods are heavily used for various NLP tasks. As an example, an NLP classification task would be to classify news articles into a set of news topics like sports or politics. On the other hand, regression techniques, which give a numeric prediction, can be used to estimate the price of a stock based on processing the social media discussion about that stock. Similarly, unsupervised clustering algorithms can be used to club together text documents.</p>
+<ul>
+<li>
+<p>Advantage  :</p>
+<ul>
+<li>
+<p>It's can scale effortlessly</p>
+</li>
+<li>
+<p>Learnability without clear programming.</p>
+</li>
+<li>
+<p>Quick development if the dataset is available.</p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<p>Disadvantage :</p>
+<ul>
+<li>
+<p>Training corpus with annotation needed</p>
+</li>
+<li>
+<p>Hard to debug</p>
+</li>
+<li>
+<p>Zero understanding of the language.</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Deep-Learning-for-NLP">
+<a class="anchor" href="#Deep-Learning-for-NLP" aria-hidden="true"><span class="octicon octicon-link"></span></a>Deep Learning for NLP<a class="anchor-link" href="#Deep-Learning-for-NLP"> </a>
+</h2>
+<p>In the last few years, we have seen a huge surge in using neural networks to deal with complex, unstructured data. Language is inherently complex and unstructured. Therefore, we need models with better representation and learning capability to understand and solve language tasks. Here are a few popular deep neural network architectures that have become the status quo in NLP.</p>
+<ul>
+<li>
+<p>Recurrent Neural Networks</p>
+</li>
+<li>
+<p>Long-short Term Memory</p>
+</li>
+<li>
+<p>Convolutional Neural Networks</p>
+</li>
+<li>
+<p>Transformers</p>
+</li>
+<li>
+<p>Autoencoders</p>
+</li>
+</ul>
+<p>With this broad overview in place, let’s start delving deeper into the world of NLP.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p></p>
+<div class="footnotes"><p id="fn-1">1. Notes are compiled from <a href="https://www.oreilly.com/library/view/practical-natural-language/9781492054047/">Practical Natural Language Processing: A Comprehensive Guide to Building Real-World NLP Systems</a>, <a href="https://towardsdatascience.com/introduction-to-natural-language-processing-nlp-323cc007df3d">Introduction to Natural Language Processing (NLP)</a><a href="#fnref-1" class="footnote footnotes">↩</a></p></div>
+<div class="footnotes"><p id="fn-2">2. If you face any problem or have any feedback/suggestions feel free to comment.<a href="#fnref-2" class="footnote footnotes">↩</a></p></div>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="ShubhangiDabral13/Bits-and-Bytes-of-NLP"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/Bits-and-Bytes-of-NLP/basic-nlp/2020/12/22/Introduction-To-Natural-Language-Processing.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/Bits-and-Bytes-of-NLP/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/Bits-and-Bytes-of-NLP/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/Bits-and-Bytes-of-NLP/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>A technical blog which cover all Bits and Bytes of NLP.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/ShubhangiDabral13" title="ShubhangiDabral13"><svg class="svg-icon grey"><use xlink:href="/Bits-and-Bytes-of-NLP/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/Shubhi_Dabral" title="Shubhi_Dabral"><svg class="svg-icon grey"><use xlink:href="/Bits-and-Bytes-of-NLP/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
