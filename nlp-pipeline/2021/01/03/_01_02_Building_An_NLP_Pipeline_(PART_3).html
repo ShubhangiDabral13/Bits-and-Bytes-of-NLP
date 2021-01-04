@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Topic 02.3: Building an NLP Pipeline(PART-3) | Bits and Bytes of NLP</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Topic 02.3: Building an NLP Pipeline(PART-3)" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A technical blog which cover all Bits and Bytes of NLP." />
+<meta property="og:description" content="A technical blog which cover all Bits and Bytes of NLP." />
+<link rel="canonical" href="https://shubhangidabral13.github.io/Bits-and-Bytes-of-NLP/nlp-pipeline/2021/01/03/_01_02_Building_An_NLP_Pipeline_(PART_3).html" />
+<meta property="og:url" content="https://shubhangidabral13.github.io/Bits-and-Bytes-of-NLP/nlp-pipeline/2021/01/03/_01_02_Building_An_NLP_Pipeline_(PART_3).html" />
+<meta property="og:site_name" content="Bits and Bytes of NLP" />
+<meta property="og:image" content="https://shubhangidabral13.github.io/Bits-and-Bytes-of-NLP/images/logo/logo.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-01-03T00:00:00-06:00" />
+<script type="application/ld+json">
+{"url":"https://shubhangidabral13.github.io/Bits-and-Bytes-of-NLP/nlp-pipeline/2021/01/03/_01_02_Building_An_NLP_Pipeline_(PART_3).html","@type":"BlogPosting","headline":"Topic 02.3: Building an NLP Pipeline(PART-3)","dateModified":"2021-01-03T00:00:00-06:00","datePublished":"2021-01-03T00:00:00-06:00","image":"https://shubhangidabral13.github.io/Bits-and-Bytes-of-NLP/images/logo/logo.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://shubhangidabral13.github.io/Bits-and-Bytes-of-NLP/nlp-pipeline/2021/01/03/_01_02_Building_An_NLP_Pipeline_(PART_3).html"},"description":"A technical blog which cover all Bits and Bytes of NLP.","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/Bits-and-Bytes-of-NLP/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://shubhangidabral13.github.io/Bits-and-Bytes-of-NLP/feed.xml" title="Bits and Bytes of NLP" /><link rel="shortcut icon" type="image/x-icon" href="/Bits-and-Bytes-of-NLP/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" /><script src="https://hypothes.is/embed.js" async></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/Bits-and-Bytes-of-NLP/">Bits and Bytes of NLP</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/Bits-and-Bytes-of-NLP/about/">About Me</a><a class="page-link" href="/Bits-and-Bytes-of-NLP/search/">Search</a><a class="page-link" href="/Bits-and-Bytes-of-NLP/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Topic 02.3: Building an NLP Pipeline(PART-3)</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-01-03T00:00:00-06:00" itemprop="datePublished">
+        Jan 3, 2021
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      5 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/Bits-and-Bytes-of-NLP/categories/#nlp-pipeline">nlp-pipeline</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          <div class="px-2">
+
+    <a href="https://github.com/ShubhangiDabral13/Bits-and-Bytes-of-NLP/tree/master/_notebooks/2021_01_02_Building_An_NLP_Pipeline_(PART_3).ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/Bits-and-Bytes-of-NLP/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/ShubhangiDabral13/Bits-and-Bytes-of-NLP/master?filepath=_notebooks%2F2021_01_02_Building_An_NLP_Pipeline_%28PART_3%29.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/Bits-and-Bytes-of-NLP/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/ShubhangiDabral13/Bits-and-Bytes-of-NLP/blob/master/_notebooks/2021_01_02_Building_An_NLP_Pipeline_(PART_3).ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/Bits-and-Bytes-of-NLP/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#Modeling">Modeling </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#Start-with-Simple-Heuristics">Start with Simple Heuristics </a></li>
+<li class="toc-entry toc-h2"><a href="#Building-Your-Model">Building Your Model </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#a).-Create-a-feature-from-the-heuristic-for-your-ML-model">a). Create a feature from the heuristic for your ML model </a></li>
+<li class="toc-entry toc-h3"><a href="#b).Pre-process-your-input-to-the-ML-model">b).Pre-process your input to the ML model </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#Building-The-Model">Building The Model </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#1.Ensemble-and-stacking">1.Ensemble and stacking </a></li>
+<li class="toc-entry toc-h3"><a href="#2.Better-feature-engineering">2.Better feature engineering </a></li>
+<li class="toc-entry toc-h3"><a href="#3.Transfer-learning">3.Transfer learning </a></li>
+<li class="toc-entry toc-h3"><a href="#4.Reapplying-heuristics">4.Reapplying heuristics </a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#Evaluation">Evaluation </a></li>
+<li class="toc-entry toc-h1"><a href="#Deployment">Deployment </a></li>
+<li class="toc-entry toc-h1"><a href="#Monitoring-and-Model-Updating">Monitoring and Model Updating </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#Monitoring">Monitoring </a></li>
+<li class="toc-entry toc-h2"><a href="#Model-Updating">Model Updating </a></li>
+</ul>
+</li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2021_01_02_Building_An_NLP_Pipeline_(PART_3).ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><figure>
+  
+    <img class="docimage" src="/Bits-and-Bytes-of-NLP/images/copied_from_nb/my_icons/topic_02.a.1.png" alt="">
+    
+    
+</figure>
+</p>
+<p>Let's resume our discussion on NLP pipeline. In the previous 2 blog post we completed the first 4 steps of NLP pipeline. In this blog post we will cover Modeling, Evaluation, Deployement and Monitoring and Model Updating.</p>
+<h1 id="Modeling">
+<a class="anchor" href="#Modeling" aria-hidden="true"><span class="octicon octicon-link"></span></a>Modeling<a class="anchor-link" href="#Modeling"> </a>
+</h1>
+<p>The next step is about how to build a useful solution out of this. At the start, when we have limited data, we can use simpler methods and rules. Over time, with more data and a better understanding of the problem, we can add more complexity and improve performance.There are different ways to create the model. They are as follows:-</p>
+<h2 id="Start-with-Simple-Heuristics">
+<a class="anchor" href="#Start-with-Simple-Heuristics" aria-hidden="true"><span class="octicon octicon-link"></span></a>Start with Simple Heuristics<a class="anchor-link" href="#Start-with-Simple-Heuristics"> </a>
+</h2>
+<p>At the very start of building a model, ML may not play a major role by itself. Part of that could be due to a lack of data, but human-built heuristics can also provide a great start in some ways.For instance, in email spam-classification tasks, we may have a blacklist of domains that are used exclusively to send spam. This information can be used to filter emails from those domains. Similarly, a blacklist of words in an email that denote a high chance of spam could also be used for this classification.</p>
+<p>Another popular approach to incorporating heuristics in your system is using regular expression. Stanford NLP’s TokensRegex and spaCy’s rule-based matching are two tools that are useful for defining advanced regular expressions to capture other information.</p>
+<h2 id="Building-Your-Model">
+<a class="anchor" href="#Building-Your-Model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Building Your Model<a class="anchor-link" href="#Building-Your-Model"> </a>
+</h2>
+<p>While a set of simple heuristics is a good start, as our system matures,adding newer and newer heuristics may result in a complex, rule-based system. Such a system is hard to manage, and it can be even harder to diagnose the cause of errors. We need a system that’s easier to maintain as it matures. Further, as we collect more data, our ML model starts beating pure heuristics. At that point, a common practice is to combine heuristics directly or indirectly with the ML model.There are two broad ways of doing that:</p>
+<h3 id="a).-Create-a-feature-from-the-heuristic-for-your-ML-model">
+<a class="anchor" href="#a).-Create-a-feature-from-the-heuristic-for-your-ML-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>a). Create a feature from the heuristic for your ML model<a class="anchor-link" href="#a).-Create-a-feature-from-the-heuristic-for-your-ML-model"> </a>
+</h3>
+<p>When there are many heuristics where the behavior of a single heuristic is deterministic but their combined behavior is fuzzy in terms of how they predict, it’s best to use these heuristics as features to train your ML model. For instance, in the email spam-classification example, we can add features, such as the number
+of words from the blacklist in a given email or the email bounce rate, to the ML model.</p>
+<h3 id="b).Pre-process-your-input-to-the-ML-model">
+<a class="anchor" href="#b).Pre-process-your-input-to-the-ML-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>b).Pre-process your input to the ML model<a class="anchor-link" href="#b).Pre-process-your-input-to-the-ML-model"> </a>
+</h3>
+<p>If the heuristic has a really high prediction for a particular kind of class, then it’s best to use it before feeding the data in your ML model. For instance, if for certain words in an email, there’s a 99% chance that it’s spam, then it’s best to classify that email as spam instead of sending it to an ML model.</p>
+<h2 id="Building-The-Model">
+<a class="anchor" href="#Building-The-Model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Building The Model<a class="anchor-link" href="#Building-The-Model"> </a>
+</h2>
+<p>After following the baseline of modeling starting from simple Heuristics followed by Building your model the final step is to build "THE MODEL" that gives good performance and is also production-ready. For that we may have to do many iterations of the model-building process.We cover some of the approaches to address this issue here:</p>
+<h3 id="1.Ensemble-and-stacking">
+<a class="anchor" href="#1.Ensemble-and-stacking" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.Ensemble and stacking<a class="anchor-link" href="#1.Ensemble-and-stacking"> </a>
+</h3>
+<p>a common practice is not to have a single model, but to use a collection of ML models, often dealing with different aspects of the prediction problem. There are two ways of doing this: we can feed one model’s output as input for another model, thus sequentially going from one model to another and obtaining a final output. This is called model stacking. Alternatively, we can also pool predictions from multiple models and make a final prediction. This is called model ensembling.</p>
+<h3 id="2.Better-feature-engineering">
+<a class="anchor" href="#2.Better-feature-engineering" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.Better feature engineering<a class="anchor-link" href="#2.Better-feature-engineering"> </a>
+</h3>
+<p>A better feature engineering step may lead to better performance. For instance, if there are a lot of features, then we use feature selection to find a better model. Detail about feature engineering will be coverd in future topic.</p>
+<h3 id="3.Transfer-learning">
+<a class="anchor" href="#3.Transfer-learning" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.Transfer learning<a class="anchor-link" href="#3.Transfer-learning"> </a>
+</h3>
+<p>Transfer learning is a machine learning technique where a model trained on one task is re-purposed on a second related task. As an example, for email spam classification, we can use BERT to fine-tune the email dataset.</p>
+<h3 id="4.Reapplying-heuristics">
+<a class="anchor" href="#4.Reapplying-heuristics" aria-hidden="true"><span class="octicon octicon-link"></span></a>4.Reapplying heuristics<a class="anchor-link" href="#4.Reapplying-heuristics"> </a>
+</h3>
+<p>No ML model is perfect. Hence, ML models still make mistakes.It’s possible to revisit these cases again at the end of the modeling pipeline to find any common pattern in errors and use heuristicsto correct them. We can also apply domain-specific knowledge that is not automatically captured in the data to refine the model predictions.</p>
+<h1 id="Evaluation">
+<a class="anchor" href="#Evaluation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Evaluation<a class="anchor-link" href="#Evaluation"> </a>
+</h1>
+<p><figure>
+  
+    <img class="docimage" src="/Bits-and-Bytes-of-NLP/images/copied_from_nb/my_icons/topic_02.b.1.jpg" alt="">
+    
+    
+</figure>
+</p>
+<p>A key step in the NLP pipeline is to measure how good the model we’ve built is.Success in this phase depends on two factors:</p>
+<ul>
+<li>using the right metric for evaluation</li>
+<li>following the right evaluation process.</li>
+</ul>
+<p>evaluations are of two types: intrinsic and extrinsic. Intrinsic focuses on intermediary objectives, while extrinsic focuses on evaluating performance on the final objective. For example, consider a spam-classification system. The ML metric will be precision and recall, while the business metric will be “the amount of time users spent on a spam email.” Intrinsic evaluation will focus on measuring the system performance using precision and recall. Extrinsic evaluation will focus on measuring the time a user wasted because a spam email went to their inbox or a genuine email went to their spam folder.</p>
+<h1 id="Deployment">
+<a class="anchor" href="#Deployment" aria-hidden="true"><span class="octicon octicon-link"></span></a>Deployment<a class="anchor-link" href="#Deployment"> </a>
+</h1>
+<p>An NLP model can only begin to add value to an organization when that model’s insights routinely become available to the users for which it was built. The process of taking a trained  model and making its predictions available to users or other systems is known as deployment. Various cloud services like AWS,Azure make deployement quite easy and effective. More detials will be covered in the future tutorials.</p>
+<h1 id="Monitoring-and-Model-Updating">
+<a class="anchor" href="#Monitoring-and-Model-Updating" aria-hidden="true"><span class="octicon octicon-link"></span></a>Monitoring and Model Updating<a class="anchor-link" href="#Monitoring-and-Model-Updating"> </a>
+</h1>
+<h2 id="Monitoring">
+<a class="anchor" href="#Monitoring" aria-hidden="true"><span class="octicon octicon-link"></span></a>Monitoring<a class="anchor-link" href="#Monitoring"> </a>
+</h2>
+<p>the model performance is monitored constantly after deploying. Monitoring for NLP projects and models has to be handled differently than a regular engineering project, as we need to ensure that the outputs produced by our models daily make sense. If we’re automatically training the model frequently, we have to make sure that the models behave in a reasonable manner.</p>
+<h2 id="Model-Updating">
+<a class="anchor" href="#Model-Updating" aria-hidden="true"><span class="octicon octicon-link"></span></a>Model Updating<a class="anchor-link" href="#Model-Updating"> </a>
+</h2>
+<p>Once the model is deployed and we start gathering new data, we’ll iterate the model based on this new data to stay current with predictions.</p>
+<p>Detialed and practical implementation will be covered as we will move forward with the topics.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="ShubhangiDabral13/Bits-and-Bytes-of-NLP"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/Bits-and-Bytes-of-NLP/nlp-pipeline/2021/01/03/_01_02_Building_An_NLP_Pipeline_(PART_3).html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/Bits-and-Bytes-of-NLP/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/Bits-and-Bytes-of-NLP/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/Bits-and-Bytes-of-NLP/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>A technical blog which cover all Bits and Bytes of NLP.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/ShubhangiDabral13" title="ShubhangiDabral13"><svg class="svg-icon grey"><use xlink:href="/Bits-and-Bytes-of-NLP/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/Shubhi_Dabral" title="Shubhi_Dabral"><svg class="svg-icon grey"><use xlink:href="/Bits-and-Bytes-of-NLP/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
