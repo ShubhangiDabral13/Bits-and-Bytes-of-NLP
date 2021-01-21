@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Topic 03.1: Text Representation | Bits and Bytes of NLP</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Topic 03.1: Text Representation" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Representing raw text to suitable numeric format" />
+<meta property="og:description" content="Representing raw text to suitable numeric format" />
+<link rel="canonical" href="https://shubhangidabral13.github.io/Bits-and-Bytes-of-NLP/basic-nlp/2021/01/20/_Text_Representation(PART-1).html" />
+<meta property="og:url" content="https://shubhangidabral13.github.io/Bits-and-Bytes-of-NLP/basic-nlp/2021/01/20/_Text_Representation(PART-1).html" />
+<meta property="og:site_name" content="Bits and Bytes of NLP" />
+<meta property="og:image" content="https://shubhangidabral13.github.io/Bits-and-Bytes-of-NLP/images/logo/logo.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-01-20T00:00:00-06:00" />
+<script type="application/ld+json">
+{"url":"https://shubhangidabral13.github.io/Bits-and-Bytes-of-NLP/basic-nlp/2021/01/20/_Text_Representation(PART-1).html","@type":"BlogPosting","headline":"Topic 03.1: Text Representation","dateModified":"2021-01-20T00:00:00-06:00","datePublished":"2021-01-20T00:00:00-06:00","image":"https://shubhangidabral13.github.io/Bits-and-Bytes-of-NLP/images/logo/logo.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://shubhangidabral13.github.io/Bits-and-Bytes-of-NLP/basic-nlp/2021/01/20/_Text_Representation(PART-1).html"},"description":"Representing raw text to suitable numeric format","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/Bits-and-Bytes-of-NLP/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://shubhangidabral13.github.io/Bits-and-Bytes-of-NLP/feed.xml" title="Bits and Bytes of NLP" /><link rel="shortcut icon" type="image/x-icon" href="/Bits-and-Bytes-of-NLP/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" /><script src="https://hypothes.is/embed.js" async></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/Bits-and-Bytes-of-NLP/">Bits and Bytes of NLP</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/Bits-and-Bytes-of-NLP/about/">About Me</a><a class="page-link" href="/Bits-and-Bytes-of-NLP/search/">Search</a><a class="page-link" href="/Bits-and-Bytes-of-NLP/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Topic 03.1: Text Representation</h1><p class="page-description">Representing raw text to suitable numeric format</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-01-20T00:00:00-06:00" itemprop="datePublished">
+        Jan 20, 2021
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      12 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/Bits-and-Bytes-of-NLP/categories/#basic-nlp">basic-nlp</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          <div class="px-2">
+
+    <a href="https://github.com/ShubhangiDabral13/Bits-and-Bytes-of-NLP/tree/master/_notebooks/2021-01-20_Text_Representation(PART-1).ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/Bits-and-Bytes-of-NLP/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/ShubhangiDabral13/Bits-and-Bytes-of-NLP/master?filepath=_notebooks%2F2021-01-20_Text_Representation%28PART-1%29.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/Bits-and-Bytes-of-NLP/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/ShubhangiDabral13/Bits-and-Bytes-of-NLP/blob/master/_notebooks/2021-01-20_Text_Representation(PART-1).ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/Bits-and-Bytes-of-NLP/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#What-is-Text-Representation?">What is Text Representation? </a></li>
+<li class="toc-entry toc-h2"><a href="#Vector-Space-Model">Vector Space Model </a></li>
+<li class="toc-entry toc-h2"><a href="#Basic-Vectorization-Approaches">Basic Vectorization Approaches </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#1.One-Hot-Encoding">1.One-Hot Encoding </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#Pros-of-One-Hot-Encoding">Pros of One-Hot Encoding </a></li>
+<li class="toc-entry toc-h4"><a href="#Cons-of-One-Hot-Encoding">Cons of One-Hot Encoding </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#2.Bag-of-Words">2.Bag of Words </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#Pros-of-Bag-of-Words">Pros of Bag of Words </a></li>
+<li class="toc-entry toc-h4"><a href="#Cons-of-Bag-of-Words">Cons of Bag of Words </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#3.Bag-of-N-Grams">3.Bag of N-Grams </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#Pros-of-Bag-of-N-Gram">Pros of Bag of N-Gram </a></li>
+<li class="toc-entry toc-h4"><a href="#Cons-of-Bag-of-N-Gram">Cons of Bag of N-Gram </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#4.TF-IDF">4.TF-IDF </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#TF-(term-frequency)">TF (term frequency) </a></li>
+<li class="toc-entry toc-h4"><a href="#DF-(inverse-document-frequency)">DF (inverse document frequency) </a></li>
+<li class="toc-entry toc-h4"><a href="#Pros-of-TF-IDF">Pros of TF-IDF </a></li>
+<li class="toc-entry toc-h4"><a href="#Cons-of-TF-IDF">Cons of TF-IDF </a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2021-01-20_Text_Representation(PART-1).ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="What-is-Text-Representation?">
+<a class="anchor" href="#What-is-Text-Representation?" aria-hidden="true"><span class="octicon octicon-link"></span></a>What is Text Representation?<a class="anchor-link" href="#What-is-Text-Representation?"> </a>
+</h2>
+<p>In NLP the game is all about text. Text that we collect and provide to our computer.</p>
+<p>But what if the text we provide cannot be comprehend by our NLP or machine Learning algorithm?
+Well this nightmare is true because as we know our algorithm cannot handle the text. It might not get the simple English(or any other language text) which we easily grasp.</p>
+<p>Number is something that computer always love. So isn't it's better that we convert our text into suitable numeric format.</p>
+<p><em>Conversion of raw text to a suitable numerical form is called text representation.</em></p>
+<p><strong>With respect to the larger picture for any NLP problem, the scope of this chapter is
+depicted by the dotted box in the below figure.</strong></p>
+<p><figure>
+  
+    <img class="docimage" src="/Bits-and-Bytes-of-NLP/images/copied_from_nb/my_icons/topic_03.1.a.png" alt="">
+    
+    
+</figure>
+</p>
+<p>We will start with simple approaches and go all the way to state-of-the-art techniques for representing text. These approaches are classified into four categories:</p>
+<ul>
+<li>Basic vectorization approaches</li>
+<li>Distributed representations</li>
+<li>Universal language representation</li>
+<li>Handcrafted features</li>
+</ul>
+<p>Before starting with Basic Vectorization approaches let me give you a clear picture about <strong>Vector space models.</strong></p>
+<h2 id="Vector-Space-Model">
+<a class="anchor" href="#Vector-Space-Model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Vector Space Model<a class="anchor-link" href="#Vector-Space-Model"> </a>
+</h2>
+<ul>
+<li>Text are represented with a vectors of numbers that are called Vector Space Model(VSM).</li>
+<li>VSM is fundamental to many information-retrieval operations, from scoring documents on a query to document classification and document clustering. </li>
+<li>It’s a mathematical model that represents text units as vectors.</li>
+<li>In the simplest form, these are vectors of identifiers, such as index numbers in a corpus vocabulary. </li>
+<li>In this setting, the most common way to calculate similarity between two text blobs is using cosine similarity.
+<div class="flash">
+    <svg class="octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg>
+    <strong>Note: </strong>The cosine of the angle between their corresponding vectors. The cosine of 0° is 1 and the cosine of 180° is –1, with the cosine monotonically decreasing from 0° to 180°. 
+</div>
+Given two vectors, A and B, each with n components, the similarity between them is computed as follows:</li>
+</ul>
+<p><figure>
+  
+    <img class="docimage" src="/Bits-and-Bytes-of-NLP/images/copied_from_nb/my_icons/topic_03.1.b.png" alt="">
+    
+    
+</figure>
+</p>
+<h2 id="Basic-Vectorization-Approaches">
+<a class="anchor" href="#Basic-Vectorization-Approaches" aria-hidden="true"><span class="octicon octicon-link"></span></a>Basic Vectorization Approaches<a class="anchor-link" href="#Basic-Vectorization-Approaches"> </a>
+</h2>
+<p>To understand different Basic vectorization approaches let’s take a toy corpus with only four documents—D 1 , D 2 , D 3 , D 4 —as an example.</p>
+<p><figure>
+  
+    <img class="docimage" src="/Bits-and-Bytes-of-NLP/images/copied_from_nb/my_icons/topic_03.1.c.png" alt="">
+    
+    
+</figure>
+</p>
+<p>The vocabulary of this corpus is comprised of six words: <strong>[dog, bites, man, eats, meat, food]</strong>. We can organize the vocabulary in any order. In this example, we simply take the order in which the words appear in the corpus.</p>
+<h3 id="1.One-Hot-Encoding">
+<a class="anchor" href="#1.One-Hot-Encoding" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.One-Hot Encoding<a class="anchor-link" href="#1.One-Hot-Encoding"> </a>
+</h3>
+<ul>
+<li>In one-hot encoding, each word w in the corpus vocabulary is given aunique integer ID w id that is between 1 and |V|, where V is the set of the corpus vocabulary. </li>
+<li>Each word is then represented by a V-dimensional binary vector of 0s and 1s. This is done via a |V| dimension vector filled with all 0s except the index, where index = w id . </li>
+<li>At this index, we simply put a 1. The representation for individual words is then combined to form a sentence representation.</li>
+</ul>
+<p><strong>Example of toy dataset:</strong></p>
+<ul>
+<li>We first map each of the six words to unique IDs: dog = 1, bites = 2, man = 3, meat = 4 , food = 5, eats = 6.</li>
+<li>Now for D1 “dog bites man” each word is a six-dimensional vector. </li>
+<li>Dog is represented as [1 0 0 0 0 0], as the word “dog” is mapped to ID 1. Bites is represented as [0 1 0 0 0 0], and so on and so forth. Thus, D1 is represented as [ [1 0 0 0 0 0] [0 1 0 0 0 0] [0 0 1 0 0 0]]. </li>
+<li>Other documents in the corpus can be represented similarly.</li>
+</ul>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">S1</span> <span class="o">=</span> <span class="s1">'dog bites man'</span>
+<span class="n">S2</span> <span class="o">=</span> <span class="s1">'man bites dog'</span>
+<span class="n">S3</span> <span class="o">=</span> <span class="s1">'dog eats meat'</span>
+<span class="n">S4</span> <span class="o">=</span> <span class="s1">'man eats food'</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">S1</span><span class="o">.</span><span class="n">split</span><span class="p">(),</span><span class="n">S2</span><span class="o">.</span><span class="n">split</span><span class="p">(),</span><span class="n">S3</span><span class="o">.</span><span class="n">split</span><span class="p">(),</span><span class="n">S4</span><span class="o">.</span><span class="n">split</span><span class="p">()]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OneHotEncoder</span>
+
+<span class="c1">#One-Hot Encoding</span>
+<span class="n">onehot_encoder</span> <span class="o">=</span> <span class="n">OneHotEncoder</span><span class="p">()</span>
+<span class="n">onehot_encoded</span> <span class="o">=</span> <span class="n">onehot_encoder</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Onehot Encoded Matrix:</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span><span class="n">onehot_encoded</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Onehot Encoded Matrix:
+ [[1. 0. 1. 0. 0. 0. 1. 0.]
+ [0. 1. 1. 0. 1. 0. 0. 0.]
+ [1. 0. 0. 1. 0. 0. 0. 1.]
+ [0. 1. 0. 1. 0. 1. 0. 0.]]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Pros-of-One-Hot-Encoding">
+<a class="anchor" href="#Pros-of-One-Hot-Encoding" aria-hidden="true"><span class="octicon octicon-link"></span></a>Pros of One-Hot Encoding<a class="anchor-link" href="#Pros-of-One-Hot-Encoding"> </a>
+</h4>
+<ul>
+<li>one-hot encoding is intuitive to understand and straightforward to implement.</li>
+</ul>
+<h4 id="Cons-of-One-Hot-Encoding">
+<a class="anchor" href="#Cons-of-One-Hot-Encoding" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cons of One-Hot Encoding<a class="anchor-link" href="#Cons-of-One-Hot-Encoding"> </a>
+</h4>
+<ul>
+<li>The size of the vectors is directly proportional to the size of the vocabulary and also the vectors is sparse.</li>
+<li>There is no fixed length representation of text. Text with 10 words is much larger than text with 4 words.</li>
+<li>Semantic meaniing is poorly captured by One-Hot Ecnoding.</li>
+<li>Cannot handle out of vocabulary(OOV) problem.
+<div class="flash">
+    <svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg>
+    <strong>Note: </strong>OOV is cause when we ecounter the words that are not present in the vocabulary.
+</div>
+</li>
+</ul>
+<h3 id="2.Bag-of-Words">
+<a class="anchor" href="#2.Bag-of-Words" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.Bag of Words<a class="anchor-link" href="#2.Bag-of-Words"> </a>
+</h3>
+<p>The key idea behind it is as follows:</p>
+<ul>
+<li>represent the text under consideration as a bag (collection) of words while ignoring the order and context. </li>
+<li>The basic intuition behind it is that it assumes that the text belonging to a given class in the dataset is characterized by a unique set of words. </li>
+<li>If two text pieces have nearly the same words, then they belong to the same bag (class). Thus, by analyzing the words present in a piece of text, one can identify the class (bag) it belongs to.</li>
+<li>BoW maps words to unique integer IDs between 1 and |V|. </li>
+<li>Each document in the corpus is then converted into a vector of |V| dimensions where in the i th component of the vector, i = w id , is simply the number of times the word w occurs in the document, i.e., we simply score each word in V by their occurrence count in the document.</li>
+</ul>
+<p><strong>Example of toy dataset:</strong></p>
+<ul>
+<li>The word IDs are dog = 1, bites = 2, man = 3, meat = 4 , food = 5, eats = 6.</li>
+<li>So D1 becomes [1 1 1 0 0 0].  This is because the first three words in the vocabulary appeared exactly once in D1, and the last three did not appear at all.</li>
+<li>D4 becomes [0 0 1 0 1 1].</li>
+</ul>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">documents</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"Dog bites man."</span><span class="p">,</span> <span class="s2">"Man bites dog."</span><span class="p">,</span> <span class="s2">"Dog eats meat."</span><span class="p">,</span> <span class="s2">"Man eats food."</span><span class="p">]</span> <span class="c1">#Same as the earlier notebook</span>
+<span class="n">processed_docs</span> <span class="o">=</span> <span class="p">[</span><span class="n">doc</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"."</span><span class="p">,</span><span class="s2">""</span><span class="p">)</span> <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">documents</span><span class="p">]</span>
+<span class="n">processed_docs</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>['dog bites man', 'man bites dog', 'dog eats meat', 'man eats food']</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">CountVectorizer</span>
+
+<span class="c1">#look at the documents list</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Our corpus: "</span><span class="p">,</span> <span class="n">processed_docs</span><span class="p">)</span>
+
+<span class="n">count_vect</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">()</span>
+<span class="c1">#Build a BOW representation for the corpus</span>
+<span class="n">bow_rep</span> <span class="o">=</span> <span class="n">count_vect</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">processed_docs</span><span class="p">)</span>
+
+<span class="c1">#Look at the vocabulary mapping</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Our vocabulary: "</span><span class="p">,</span> <span class="n">count_vect</span><span class="o">.</span><span class="n">vocabulary_</span><span class="p">)</span>
+
+<span class="c1">#see the BOW rep for first 2 documents</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"BoW representation for 'dog bites man': "</span><span class="p">,</span> <span class="n">bow_rep</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">toarray</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"BoW representation for 'man bites dog: "</span><span class="p">,</span><span class="n">bow_rep</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">toarray</span><span class="p">())</span>
+
+<span class="c1">#Get the representation using this vocabulary, for a new text</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="n">count_vect</span><span class="o">.</span><span class="n">transform</span><span class="p">([</span><span class="s2">"dog and dog are friends"</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Bow representation for 'dog and dog are friends':"</span><span class="p">,</span> <span class="n">temp</span><span class="o">.</span><span class="n">toarray</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Our corpus:  ['dog bites man', 'man bites dog', 'dog eats meat', 'man eats food']
+Our vocabulary:  {'dog': 1, 'bites': 0, 'man': 4, 'eats': 2, 'meat': 5, 'food': 3}
+BoW representation for 'dog bites man':  [[1 1 0 0 1 0]]
+BoW representation for 'man bites dog:  [[1 1 0 0 1 0]]
+Bow representation for 'dog and dog are friends': [[0 2 0 0 0 0]]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>~In the above code, we represented the text considering the frequency of words into account. However, sometimes, we don't care about frequency much, but only want to know whether a word appeared in a text or not. That is, each document is represented as a vector of 0s and 1s. We will use the option binary=True in CountVectorizer for this purpose.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">count_vect</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">(</span><span class="n">binary</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">bow_rep_bin</span> <span class="o">=</span> <span class="n">count_vect</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">processed_docs</span><span class="p">)</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="n">count_vect</span><span class="o">.</span><span class="n">transform</span><span class="p">([</span><span class="s2">"dog and dog are friends"</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Bow representation for 'dog and dog are friends':"</span><span class="p">,</span> <span class="n">temp</span><span class="o">.</span><span class="n">toarray</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Bow representation for 'dog and dog are friends': [[0 1 0 0 0 0]]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Pros-of-Bag-of-Words">
+<a class="anchor" href="#Pros-of-Bag-of-Words" aria-hidden="true"><span class="octicon octicon-link"></span></a>Pros of Bag of Words<a class="anchor-link" href="#Pros-of-Bag-of-Words"> </a>
+</h4>
+<ul>
+<li>BoW is fairly simple to understand and implement.</li>
+<li>The text have similar length.</li>
+<li>documents having the same words will have their vector representations closer to each other as compared to documents with completely different words.BoW scheme captures the semantic similarity of documents. So if two documents have similar vocabulary, they’ll be closer to each other in the vector space and vice versa.</li>
+</ul>
+<h4 id="Cons-of-Bag-of-Words">
+<a class="anchor" href="#Cons-of-Bag-of-Words" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cons of Bag of Words<a class="anchor-link" href="#Cons-of-Bag-of-Words"> </a>
+</h4>
+<ul>
+<li>The size of the vectors is directly proportional to the size of the vocabulary and also the vectors is sparse.</li>
+<li>It does not capture the similarity between different words that mean the same thing. Say we have three documents: “I run”, “I ran”, and “I ate”. BoW vectors of all three documents will be equally apart.</li>
+<li>Cannot handle out of vocabulary(OOV) problem.</li>
+<li>In Bag of Words, words order are lost.</li>
+</ul>
+<h3 id="3.Bag-of-N-Grams">
+<a class="anchor" href="#3.Bag-of-N-Grams" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.Bag of N-Grams<a class="anchor-link" href="#3.Bag-of-N-Grams"> </a>
+</h3>
+<ul>
+<li>The bag-of-n-grams (BoN) approach tries to remedy the notion of phrases or word ordering.</li>
+<li>This can help us capture some context, which earlier approaches could not do. Each chunk is called an n-gram. </li>
+<li>The corpus vocabulary, V, is then nothing but a collection of all unique n-grams across the text corpus.</li>
+<li>Then, each document in the corpus is represented by a vector of length |V|. </li>
+<li>This vector simply contains the frequency counts of n-grams present in the document and zero for the n-grams that are not present.</li>
+</ul>
+<p><strong>Example of toy dataset:</strong></p>
+<ul>
+<li>Let’s construct a 2- gram (a.k.a. bigram) model for it. </li>
+<li>The set of all bigrams in the corpus is as follows: <strong>{dog bites, bites man, man bites, bites dog, dog eats, eats meat, man eats, eats food}.</strong> </li>
+<li>Then, BoN representation consists of an eight-dimensional vector for each document. </li>
+<li>The bigram representation for the first two documents is as follows: 
+  D 1 : [1,1,0,0,0,0,0,0], 
+  D 2 : [0,0,1,1,0,0,0,0]. </li>
+<li>The other two documents follow similarly.</li>
+</ul>
+<p>~CountVectorizer, which we used for BoW, can be used for getting a Bag of N-grams representation as well, using its ngram_range argument.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">CountVectorizer</span>
+
+<span class="c1">#Ngram vectorization example with count vectorizer and uni, bi, trigrams</span>
+<span class="n">count_vect</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">(</span><span class="n">ngram_range</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+
+<span class="c1">#Build a BOW representation for the corpus</span>
+<span class="n">bow_rep</span> <span class="o">=</span> <span class="n">count_vect</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">processed_docs</span><span class="p">)</span>
+
+<span class="c1">#Look at the vocabulary mapping</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Our vocabulary: "</span><span class="p">,</span> <span class="n">count_vect</span><span class="o">.</span><span class="n">vocabulary_</span><span class="p">)</span>
+
+<span class="c1">#see the BOW rep for first 2 documents</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"BoW representation for 'dog bites man': "</span><span class="p">,</span> <span class="n">bow_rep</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">toarray</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"BoW representation for 'man bites dog: "</span><span class="p">,</span><span class="n">bow_rep</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">toarray</span><span class="p">())</span>
+
+<span class="c1">#Get the representation using this vocabulary, for a new text</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="n">count_vect</span><span class="o">.</span><span class="n">transform</span><span class="p">([</span><span class="s2">"dog and dog are friends"</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Bow representation for 'dog and dog are friends':"</span><span class="p">,</span> <span class="n">temp</span><span class="o">.</span><span class="n">toarray</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Our vocabulary:  {'dog': 3, 'bites': 0, 'man': 12, 'dog bites': 4, 'bites man': 2, 'dog bites man': 5, 'man bites': 13, 'bites dog': 1, 'man bites dog': 14, 'eats': 8, 'meat': 17, 'dog eats': 6, 'eats meat': 10, 'dog eats meat': 7, 'food': 11, 'man eats': 15, 'eats food': 9, 'man eats food': 16}
+BoW representation for 'dog bites man':  [[1 0 1 1 1 1 0 0 0 0 0 0 1 0 0 0 0 0]]
+BoW representation for 'man bites dog:  [[1 1 0 1 0 0 0 0 0 0 0 0 1 1 1 0 0 0]]
+Bow representation for 'dog and dog are friends': [[0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0]]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Pros-of-Bag-of-N-Gram">
+<a class="anchor" href="#Pros-of-Bag-of-N-Gram" aria-hidden="true"><span class="octicon octicon-link"></span></a>Pros of Bag of N-Gram<a class="anchor-link" href="#Pros-of-Bag-of-N-Gram"> </a>
+</h4>
+<ul>
+<li>It captures some context and word-order information in the form of n-grams.</li>
+<li>Thus, resulting vector space is able to capture some semantic similarity.</li>
+</ul>
+<h4 id="Cons-of-Bag-of-N-Gram">
+<a class="anchor" href="#Cons-of-Bag-of-N-Gram" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cons of Bag of N-Gram<a class="anchor-link" href="#Cons-of-Bag-of-N-Gram"> </a>
+</h4>
+<ul>
+<li>As n increases, dimensionality (and therefore sparsity) only increases rapidly.</li>
+<li>It still provides no way to address the OOV problem.</li>
+</ul>
+<h3 id="4.TF-IDF">
+<a class="anchor" href="#4.TF-IDF" aria-hidden="true"><span class="octicon octicon-link"></span></a>4.TF-IDF<a class="anchor-link" href="#4.TF-IDF"> </a>
+</h3>
+<p>TF-IDF, or term frequency–inverse document frequency assign importance to the word in the documents.</p>
+<p>The intuition behind TF-IDF is as follows:</p>
+<ul>
+<li>if a word w appears many times in a document d i but does not occur much in the rest of the documents dj in the corpus, then the word w must be of great importance to the document di.</li>
+<li>The importance of w should increase in proportion to its frequency in di , but at the same time, its importance should decrease in proportion to the word’s frequency in other documents dj in the corpus. </li>
+<li>Mathematically, this is captured using two quantities: <strong>TF and IDF</strong>. The two are then combined to arrive at the TF-IDF score.</li>
+</ul>
+<h4 id="TF-(term-frequency)">
+<a class="anchor" href="#TF-(term-frequency)" aria-hidden="true"><span class="octicon octicon-link"></span></a>TF (term frequency)<a class="anchor-link" href="#TF-(term-frequency)"> </a>
+</h4>
+<ul>
+<li>measures how often a term or word occurs in a given document.</li>
+<li>Since different documents in the corpus may be ofdifferent lengths, a term may occur more often in a longer document as compared to a shorter document.</li>
+<li>To normalize these counts, we divide the number of occurrences by the length of the document. </li>
+</ul>
+<p>TF of a term t in a document d is defined as:</p>
+<p><figure>
+  
+    <img class="docimage" src="/Bits-and-Bytes-of-NLP/images/copied_from_nb/my_icons/topic_03.1.d.png" alt="">
+    
+    
+</figure>
+</p>
+<h4 id="DF-(inverse-document-frequency)">
+<a class="anchor" href="#DF-(inverse-document-frequency)" aria-hidden="true"><span class="octicon octicon-link"></span></a>DF (inverse document frequency)<a class="anchor-link" href="#DF-(inverse-document-frequency)"> </a>
+</h4>
+<ul>
+<li>measures the importance of the term across a corpus. </li>
+<li>In computing TF, all terms are given equal importance (weightage).</li>
+<li>However, it’s a well-known fact that stop words like is, are, am, etc., are not important, even though they occur frequently. </li>
+<li>To account for such cases, IDF weighs down the terms that are very common across a corpus and weighs up the rare terms.</li>
+</ul>
+<p>IDF of a term t is calculated as follows:</p>
+<p><figure>
+  
+    <img class="docimage" src="/Bits-and-Bytes-of-NLP/images/copied_from_nb/my_icons/topic_03.1.e.png" alt="">
+    
+    
+</figure>
+</p>
+<p>Thus, <strong>TF-IDF score = TF * IDF.</strong></p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfVectorizer</span>
+
+<span class="n">tfidf</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">()</span>
+<span class="n">bow_rep_tfidf</span> <span class="o">=</span> <span class="n">tfidf</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">processed_docs</span><span class="p">)</span>
+
+<span class="c1">#IDF for all words in the vocabulary</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"IDF for all words in the vocabulary"</span><span class="p">,</span><span class="n">tfidf</span><span class="o">.</span><span class="n">idf_</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"-"</span><span class="o">*</span><span class="mi">10</span><span class="p">)</span>
+<span class="c1">#All words in the vocabulary.</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"All words in the vocabulary"</span><span class="p">,</span><span class="n">tfidf</span><span class="o">.</span><span class="n">get_feature_names</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"-"</span><span class="o">*</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="c1">#TFIDF representation for all documents in our corpus </span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"TFIDF representation for all documents in our corpus</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span><span class="n">bow_rep_tfidf</span><span class="o">.</span><span class="n">toarray</span><span class="p">())</span> 
+<span class="nb">print</span><span class="p">(</span><span class="s2">"-"</span><span class="o">*</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="n">temp</span> <span class="o">=</span> <span class="n">tfidf</span><span class="o">.</span><span class="n">transform</span><span class="p">([</span><span class="s2">"dog and man are friends"</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Tfidf representation for 'dog and man are friends':</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">temp</span><span class="o">.</span><span class="n">toarray</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>IDF for all words in the vocabulary [1.51082562 1.22314355 1.51082562 1.91629073 1.22314355 1.91629073]
+----------
+All words in the vocabulary ['bites', 'dog', 'eats', 'food', 'man', 'meat']
+----------
+TFIDF representation for all documents in our corpus
+ [[0.65782931 0.53256952 0.         0.         0.53256952 0.        ]
+ [0.65782931 0.53256952 0.         0.         0.53256952 0.        ]
+ [0.         0.44809973 0.55349232 0.         0.         0.70203482]
+ [0.         0.         0.55349232 0.70203482 0.44809973 0.        ]]
+----------
+Tfidf representation for 'dog and man are friends':
+ [[0.         0.70710678 0.         0.         0.70710678 0.        ]]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Pros-of-TF-IDF">
+<a class="anchor" href="#Pros-of-TF-IDF" aria-hidden="true"><span class="octicon octicon-link"></span></a>Pros of TF-IDF<a class="anchor-link" href="#Pros-of-TF-IDF"> </a>
+</h4>
+<ul>
+<li>Assign importance to the words in a particular documents.</li>
+</ul>
+<h4 id="Cons-of-TF-IDF">
+<a class="anchor" href="#Cons-of-TF-IDF" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cons of TF-IDF<a class="anchor-link" href="#Cons-of-TF-IDF"> </a>
+</h4>
+<ul>
+<li>The feature vectors are sparse and high-dimensional representations.</li>
+<li>They cannot handle OOV problem.</li>
+</ul>
+<p>Well that now we have completed all the basic vectorization approach. In the next topic we will cover other approaches for text representation followed by state-of-art-approach.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="ShubhangiDabral13/Bits-and-Bytes-of-NLP"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/Bits-and-Bytes-of-NLP/basic-nlp/2021/01/20/_Text_Representation(PART-1).html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/Bits-and-Bytes-of-NLP/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/Bits-and-Bytes-of-NLP/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/Bits-and-Bytes-of-NLP/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>A technical blog which cover all Bits and Bytes of NLP.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/ShubhangiDabral13" title="ShubhangiDabral13"><svg class="svg-icon grey"><use xlink:href="/Bits-and-Bytes-of-NLP/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/Shubhi_Dabral" title="Shubhi_Dabral"><svg class="svg-icon grey"><use xlink:href="/Bits-and-Bytes-of-NLP/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
