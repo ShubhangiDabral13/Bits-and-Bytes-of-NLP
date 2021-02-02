@@ -4,19 +4,20 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Title | Bits and Bytes of NLP</title>
+<title>Topic 03.2: Text Representation(PART-2) | Bits and Bytes of NLP</title>
 <meta name="generator" content="Jekyll v4.1.1" />
-<meta property="og:title" content="Title" />
+<meta property="og:title" content="Topic 03.2: Text Representation(PART-2)" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="A technical blog which cover all Bits and Bytes of NLP." />
-<meta property="og:description" content="A technical blog which cover all Bits and Bytes of NLP." />
-<link rel="canonical" href="https://shubhangidabral13.github.io/Bits-and-Bytes-of-NLP/2021/02/01/_02_1_Text_Representation(PART_2).html" />
-<meta property="og:url" content="https://shubhangidabral13.github.io/Bits-and-Bytes-of-NLP/2021/02/01/_02_1_Text_Representation(PART_2).html" />
+<meta name="description" content="Representing raw text to suitable numeric format" />
+<meta property="og:description" content="Representing raw text to suitable numeric format" />
+<link rel="canonical" href="https://shubhangidabral13.github.io/Bits-and-Bytes-of-NLP/basic-nlp/2021/02/01/_02_1_Text_Representation(PART_2).html" />
+<meta property="og:url" content="https://shubhangidabral13.github.io/Bits-and-Bytes-of-NLP/basic-nlp/2021/02/01/_02_1_Text_Representation(PART_2).html" />
 <meta property="og:site_name" content="Bits and Bytes of NLP" />
+<meta property="og:image" content="https://shubhangidabral13.github.io/Bits-and-Bytes-of-NLP/images/logo/logo.png" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2021-02-01T00:00:00-06:00" />
 <script type="application/ld+json">
-{"url":"https://shubhangidabral13.github.io/Bits-and-Bytes-of-NLP/2021/02/01/_02_1_Text_Representation(PART_2).html","@type":"BlogPosting","headline":"Title","dateModified":"2021-02-01T00:00:00-06:00","datePublished":"2021-02-01T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://shubhangidabral13.github.io/Bits-and-Bytes-of-NLP/2021/02/01/_02_1_Text_Representation(PART_2).html"},"description":"A technical blog which cover all Bits and Bytes of NLP.","@context":"https://schema.org"}</script>
+{"url":"https://shubhangidabral13.github.io/Bits-and-Bytes-of-NLP/basic-nlp/2021/02/01/_02_1_Text_Representation(PART_2).html","@type":"BlogPosting","headline":"Topic 03.2: Text Representation(PART-2)","dateModified":"2021-02-01T00:00:00-06:00","datePublished":"2021-02-01T00:00:00-06:00","image":"https://shubhangidabral13.github.io/Bits-and-Bytes-of-NLP/images/logo/logo.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://shubhangidabral13.github.io/Bits-and-Bytes-of-NLP/basic-nlp/2021/02/01/_02_1_Text_Representation(PART_2).html"},"description":"Representing raw text to suitable numeric format","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/Bits-and-Bytes-of-NLP/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://shubhangidabral13.github.io/Bits-and-Bytes-of-NLP/feed.xml" title="Bits and Bytes of NLP" /><link rel="shortcut icon" type="image/x-icon" href="/Bits-and-Bytes-of-NLP/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" /><script src="https://hypothes.is/embed.js" async></script>
@@ -87,7 +88,7 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Title</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-02-01T00:00:00-06:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">Topic 03.2: Text Representation(PART-2)</h1><p class="page-description">Representing raw text to suitable numeric format</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-02-01T00:00:00-06:00" itemprop="datePublished">
         Feb 1, 2021
       </time>
        • <span class="read-time" title="Estimated read time">
@@ -97,6 +98,13 @@ window.onload = wrap_img;
     
 </span></p>
 
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/Bits-and-Bytes-of-NLP/categories/#basic-nlp">basic-nlp</a>
+        
+      
+      </p>
     
 
     
@@ -124,7 +132,22 @@ window.onload = wrap_img;
       </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <!--
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#Distributed-Representation">Distributed Representation </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Word-Embedding">Word Embedding </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#Pre-trained-word-embeddings">Pre-trained word embeddings </a></li>
+<li class="toc-entry toc-h4"><a href="#TRAINING-OUR-OWN-EMBEDDINGS">TRAINING OUR OWN EMBEDDINGS </a>
+<ul>
+<li class="toc-entry toc-h5"><a href="#Continuous-Bag-of-Words">Continuous Bag of Words </a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul><!--
 #################################################
 ### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
 #################################################
@@ -133,17 +156,24 @@ window.onload = wrap_img;
 
 <div class="container" id="notebook-container">
         
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>In the previous topic we have covered the distributional apporach(which have high dimension vector to represent words and also sparse in nature) but in this post we will cover the Distributed apporach(which have low dimension vecotr and are dense in nature) and how to create word embedding using pretrained model.</p>
-<h2 id="Distributed-Representation">Distributed Representation<a class="anchor-link" href="#Distributed-Representation"> </a></h2><p>To overcome the issue of high-dimensional representation and sparse vector to represent word, Distributed Representation help in these issue and therefore they have gained a lot of momentum in the past six to seven days.
+<h2 id="Distributed-Representation">
+<a class="anchor" href="#Distributed-Representation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Distributed Representation<a class="anchor-link" href="#Distributed-Representation"> </a>
+</h2>
+<p>To overcome the issue of high-dimensional representation and sparse vector to represent word, Distributed Representation help in these issue and therefore they have gained a lot of momentum in the past six to seven days.
 Different distributed representation are</p>
-<h3 id="Word-Embedding">Word Embedding<a class="anchor-link" href="#Word-Embedding"> </a></h3><p>Word Embeddings are the texts converted into numbers. Embeddings translate large sparse vectors into a lower-dimensional space that preserves semantic relationships.
+<h3 id="Word-Embedding">
+<a class="anchor" href="#Word-Embedding" aria-hidden="true"><span class="octicon octicon-link"></span></a>Word Embedding<a class="anchor-link" href="#Word-Embedding"> </a>
+</h3>
+<p>Word Embeddings are the texts converted into numbers. Embeddings translate large sparse vectors into a lower-dimensional space that preserves semantic relationships.
 Word embeddings is a technique where individual words of a domain or language are represented as real-valued vectors in a lower dimensional space and placing vectors of semantically similar items close to each other. This way words that have similar meaning have similar distances in the vector space as shown below.</p>
 <p><em>“king is to queen as man is to woman” encoded in the vector space as well as verb Tense and Country and their capitals are encoded in low dimensional space preserving the semantic relationships.</em></p>
 <p><figure>
   
-    <img class="docimage" src="/Bits-and-Bytes-of-NLP/images/copied_from_nb/my_icons/topic_3.2.a.png" alt="" />
+    <img class="docimage" src="/Bits-and-Bytes-of-NLP/images/copied_from_nb/my_icons/topic_3.2.a.png" alt="">
     
     
 </figure>
@@ -151,19 +181,25 @@ Word embeddings is a technique where individual words of a domain or language ar
 <p>Word2vec is an algorithm invented at Google for training word embeddings. word2vec relies on the distributional hypothesis. The distributional hypothesis states that words which, often have the same neighboring words tend to be semantically similar. This helps to map semantically similar words to geometrically close embedding vectors.</p>
 <p>Now the question arises that how we will create word embedding?</p>
 <p>Well we can also use pre-trained word embedding arcitecture or we can also train our own word embedding.</p>
-<h4 id="Pre-trained-word-embeddings">Pre-trained word embeddings<a class="anchor-link" href="#Pre-trained-word-embeddings"> </a></h4><ul>
-<li><p><strong>What is pre-trained word embeddings?</strong></p>
+<h4 id="Pre-trained-word-embeddings">
+<a class="anchor" href="#Pre-trained-word-embeddings" aria-hidden="true"><span class="octicon octicon-link"></span></a>Pre-trained word embeddings<a class="anchor-link" href="#Pre-trained-word-embeddings"> </a>
+</h4>
+<ul>
+<li>
+<p><strong>What is pre-trained word embeddings?</strong></p>
 <p>Pretrained Word Embeddings are the embeddings learned in one task that are   used for solving another similar task.</p>
 <p>These embeddings are trained on large datasets, saved, and then used for solving other tasks. That’s why pretrained word embeddings are a form of Transfer Learning.</p>
 </li>
 </ul>
 <ul>
-<li><p><strong>Why do we need Pretrained Word Embeddings?</strong></p>
+<li>
+<p><strong>Why do we need Pretrained Word Embeddings?</strong></p>
 <p>Pretrained word embeddings capture the semantic and syntactic meaning of a word as they are trained on large datasets. They are capable of boosting the performance of a Natural Language Processing (NLP) model. These word embeddings come in handy during hackathons and of course, in real-world problems as well.</p>
 </li>
 </ul>
 <ul>
-<li><p><strong>But why should we not learn our own embeddings?</strong></p>
+<li>
+<p><strong>But why should we not learn our own embeddings?</strong></p>
 <p>Well, learning word embeddings from scratch is a challenging problem due to two primary reasons:</p>
 <ul>
 <li>Sparsity of training data</li>
@@ -178,7 +214,8 @@ vectors. Some of the most popular pre-trained embeddings are
 Word2vec by Google, GloVe by Stanford, and fasttext
 embeddings by Facebook, to name a few. Further, they’re
 available for various dimensions like d = 25, 50, 100, 200, 300, 600.</p>
-<blockquote><p>Here is the code where we will find the words that are semantically most similar to the word "beautiful".</p>
+<blockquote>
+<p>Here is the code where we will find the words that are semantically most similar to the word "beautiful".</p>
 </blockquote>
 
 </div>
@@ -192,7 +229,7 @@ available for various dimensions like d = 25, 50, 100, 200, 300, 600.</p>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Downdloading Google News vectors embeddings.</span>
-<span class="o">!</span>wget -P /tmp/input/ -c <span class="s2">&quot;https://s3.amazonaws.com/dl4j-distribution/GoogleNews-vectors-negative300.bin.gz&quot;</span>
+<span class="o">!</span>wget -P /tmp/input/ -c <span class="s2">"https://s3.amazonaws.com/dl4j-distribution/GoogleNews-vectors-negative300.bin.gz"</span>
 </pre></div>
 
     </div>
@@ -234,12 +271,12 @@ GoogleNews-vectors- 100%[===================&gt;]   1.53G  46.1MB/s    in 35s
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">gensim.models</span> <span class="kn">import</span> <span class="n">Word2Vec</span><span class="p">,</span> <span class="n">KeyedVectors</span>
-<span class="n">pretrainedpath</span> <span class="o">=</span> <span class="s1">&#39;/tmp/input/GoogleNews-vectors-negative300.bin.gz&#39;</span>
+<span class="n">pretrainedpath</span> <span class="o">=</span> <span class="s1">'/tmp/input/GoogleNews-vectors-negative300.bin.gz'</span>
 
 <span class="n">w2v_model</span> <span class="o">=</span> <span class="n">KeyedVectors</span><span class="o">.</span><span class="n">load_word2vec_format</span><span class="p">(</span><span class="n">pretrainedpath</span><span class="p">,</span> <span class="n">binary</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1">#load the model</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;done loading word2vec&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"done loading word2vec"</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Numver of words in vocablulary: &quot;</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">w2v_model</span><span class="o">.</span><span class="n">vocab</span><span class="p">))</span> <span class="c1">#Number of words in the vocabulary.</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Numver of words in vocablulary: "</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">w2v_model</span><span class="o">.</span><span class="n">vocab</span><span class="p">))</span> <span class="c1">#Number of words in the vocabulary.</span>
 </pre></div>
 
     </div>
@@ -271,7 +308,7 @@ Numver of words in vocablulary:  3000000
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">w2v_model</span><span class="o">.</span><span class="n">most_similar</span><span class="p">(</span><span class="s1">&#39;beautiful&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">w2v_model</span><span class="o">.</span><span class="n">most_similar</span><span class="p">(</span><span class="s1">'beautiful'</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -286,16 +323,16 @@ Numver of words in vocablulary:  3000000
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>[(&#39;gorgeous&#39;, 0.8353004455566406),
- (&#39;lovely&#39;, 0.810693621635437),
- (&#39;stunningly_beautiful&#39;, 0.7329413890838623),
- (&#39;breathtakingly_beautiful&#39;, 0.7231341004371643),
- (&#39;wonderful&#39;, 0.6854087114334106),
- (&#39;fabulous&#39;, 0.6700063943862915),
- (&#39;loveliest&#39;, 0.6612576246261597),
- (&#39;prettiest&#39;, 0.6595001816749573),
- (&#39;beatiful&#39;, 0.6593326330184937),
- (&#39;magnificent&#39;, 0.6591402292251587)]</pre>
+<pre>[('gorgeous', 0.8353004455566406),
+ ('lovely', 0.810693621635437),
+ ('stunningly_beautiful', 0.7329413890838623),
+ ('breathtakingly_beautiful', 0.7231341004371643),
+ ('wonderful', 0.6854087114334106),
+ ('fabulous', 0.6700063943862915),
+ ('loveliest', 0.6612576246261597),
+ ('prettiest', 0.6595001816749573),
+ ('beatiful', 0.6593326330184937),
+ ('magnificent', 0.6591402292251587)]</pre>
 </div>
 
 </div>
@@ -306,7 +343,8 @@ Numver of words in vocablulary:  3000000
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Note that if we search for a word that is not present in the Word2vec
 model (e.g., “practicalnlp”), we’ll see a “key not found” error. Hence,
@@ -324,7 +362,7 @@ retrieve its vector.</strong></p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">w2v_model</span><span class="p">[</span><span class="s1">&#39;practicalnlp&#39;</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">w2v_model</span><span class="p">[</span><span class="s1">'practicalnlp'</span><span class="p">]</span>
 </pre></div>
 
     </div>
@@ -342,11 +380,11 @@ retrieve its vector.</strong></p>
 <span class="ansi-red-fg">KeyError</span>                                  Traceback (most recent call last)
 <span class="ansi-green-fg">&lt;ipython-input-4-354849ef77a2&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
 <span class="ansi-green-intense-fg ansi-bold">      1</span> <span class="ansi-red-fg">#What if I am looking for a word that is not in this vocabulary?</span>
-<span class="ansi-green-fg">----&gt; 2</span><span class="ansi-red-fg"> </span>w2v_model<span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">&#39;practicalnlp&#39;</span><span class="ansi-blue-fg">]</span>
+<span class="ansi-green-fg">----&gt; 2</span><span class="ansi-red-fg"> </span>w2v_model<span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">'practicalnlp'</span><span class="ansi-blue-fg">]</span>
 
 <span class="ansi-green-fg">/usr/local/lib/python3.6/dist-packages/gensim/models/keyedvectors.py</span> in <span class="ansi-cyan-fg">__getitem__</span><span class="ansi-blue-fg">(self, entities)</span>
 <span class="ansi-green-intense-fg ansi-bold">    335</span>         <span class="ansi-green-fg">if</span> isinstance<span class="ansi-blue-fg">(</span>entities<span class="ansi-blue-fg">,</span> string_types<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    336</span>             <span class="ansi-red-fg"># allow calls like trained_model[&#39;office&#39;], as a shorthand for trained_model[[&#39;office&#39;]]</span>
+<span class="ansi-green-intense-fg ansi-bold">    336</span>             <span class="ansi-red-fg"># allow calls like trained_model['office'], as a shorthand for trained_model[['office']]</span>
 <span class="ansi-green-fg">--&gt; 337</span><span class="ansi-red-fg">             </span><span class="ansi-green-fg">return</span> self<span class="ansi-blue-fg">.</span>get_vector<span class="ansi-blue-fg">(</span>entities<span class="ansi-blue-fg">)</span>
 <span class="ansi-green-intense-fg ansi-bold">    338</span> 
 <span class="ansi-green-intense-fg ansi-bold">    339</span>         <span class="ansi-green-fg">return</span> vstack<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">[</span>self<span class="ansi-blue-fg">.</span>get_vector<span class="ansi-blue-fg">(</span>entity<span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">for</span> entity <span class="ansi-green-fg">in</span> entities<span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">)</span>
@@ -361,11 +399,11 @@ retrieve its vector.</strong></p>
 <span class="ansi-green-fg">/usr/local/lib/python3.6/dist-packages/gensim/models/keyedvectors.py</span> in <span class="ansi-cyan-fg">word_vec</span><span class="ansi-blue-fg">(self, word, use_norm)</span>
 <span class="ansi-green-intense-fg ansi-bold">    450</span>             <span class="ansi-green-fg">return</span> result
 <span class="ansi-green-intense-fg ansi-bold">    451</span>         <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">--&gt; 452</span><span class="ansi-red-fg">             </span><span class="ansi-green-fg">raise</span> KeyError<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#34;word &#39;%s&#39; not in vocabulary&#34;</span> <span class="ansi-blue-fg">%</span> word<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">--&gt; 452</span><span class="ansi-red-fg">             </span><span class="ansi-green-fg">raise</span> KeyError<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">"word '%s' not in vocabulary"</span> <span class="ansi-blue-fg">%</span> word<span class="ansi-blue-fg">)</span>
 <span class="ansi-green-intense-fg ansi-bold">    453</span> 
 <span class="ansi-green-intense-fg ansi-bold">    454</span>     <span class="ansi-green-fg">def</span> get_vector<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> word<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
 
-<span class="ansi-red-fg">KeyError</span>: &#34;word &#39;practicalnlp&#39; not in vocabulary&#34;</pre>
+<span class="ansi-red-fg">KeyError</span>: "word 'practicalnlp' not in vocabulary"</pre>
 </div>
 </div>
 
@@ -375,9 +413,11 @@ retrieve its vector.</strong></p>
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<blockquote><p>If you’re new to embeddings, always start by using pre-trained word
+<blockquote>
+<p>If you’re new to embeddings, always start by using pre-trained word
 embeddings in your project. Understand their pros and cons, then start thinking
 of building your own embeddings. Using pre-trained embeddings will quickly
 give you a strong baseline for the task at hand.</p>
@@ -387,19 +427,26 @@ give you a strong baseline for the task at hand.</p>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="TRAINING-OUR-OWN-EMBEDDINGS">TRAINING OUR OWN EMBEDDINGS<a class="anchor-link" href="#TRAINING-OUR-OWN-EMBEDDINGS"> </a></h4><p>For training our own word embeddings we’ll look at two architectural variants that were propossed in Word2Vec</p>
+<h4 id="TRAINING-OUR-OWN-EMBEDDINGS">
+<a class="anchor" href="#TRAINING-OUR-OWN-EMBEDDINGS" aria-hidden="true"><span class="octicon octicon-link"></span></a>TRAINING OUR OWN EMBEDDINGS<a class="anchor-link" href="#TRAINING-OUR-OWN-EMBEDDINGS"> </a>
+</h4>
+<p>For training our own word embeddings we’ll look at two architectural variants that were propossed in Word2Vec</p>
 <ul>
 <li>Continuous bag of words(CBOW)</li>
 <li>SkipGram </li>
 </ul>
-<h5 id="Continuous-Bag-of-Words"><strong>Continuous Bag of Words</strong><a class="anchor-link" href="#Continuous-Bag-of-Words"> </a></h5><p>CBOW tries to learn a language model that tries to predict the “center” word from the words in its context. Let’s understand this using our toy corpus(the quick brown fox jumped over the lazy dog). If we take the word “jumps” as the center word, then its context is formed by words in its vicinity. If we take the context size of 2, then for our example, the context is given by brown, fox, over, the. CBOW uses the context words to predict the target word—jumped. CBOW tries to do this
+<h5 id="Continuous-Bag-of-Words">
+<a class="anchor" href="#Continuous-Bag-of-Words" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Continuous Bag of Words</strong><a class="anchor-link" href="#Continuous-Bag-of-Words"> </a>
+</h5>
+<p>CBOW tries to learn a language model that tries to predict the “center” word from the words in its context. Let’s understand this using our toy corpus(the quick brown fox jumped over the lazy dog). If we take the word “jumps” as the center word, then its context is formed by words in its vicinity. If we take the context size of 2, then for our example, the context is given by brown, fox, over, the. CBOW uses the context words to predict the target word—jumped. CBOW tries to do this
 for every word in the corpus; i.e., it takes every word in the corpus as the target word and tries to predict the target word from its
 corresponding context words.</p>
 <p><figure>
   
-    <img class="docimage" src="/Bits-and-Bytes-of-NLP/images/copied_from_nb/my_icons/topic_3.2.b.png" alt="" />
+    <img class="docimage" src="/Bits-and-Bytes-of-NLP/images/copied_from_nb/my_icons/topic_3.2.b.png" alt="">
     
     
 </figure>
@@ -407,7 +454,7 @@ corresponding context words.</p>
 <p><strong>Understanding CBOW architecture</strong></p>
 <p><figure>
   
-    <img class="docimage" src="/Bits-and-Bytes-of-NLP/images/copied_from_nb/my_icons/topic_3.2.c.png" alt="" />
+    <img class="docimage" src="/Bits-and-Bytes-of-NLP/images/copied_from_nb/my_icons/topic_3.2.c.png" alt="">
     
     
 </figure>
@@ -417,7 +464,7 @@ corresponding context words.</p>
 <p>The corpus vocabulary has eight words. Once ordered alphabetically, each word can be referenced by its index. For this example, our neural network will have eight input neurons and eight output neurons. Let us assume that we decide to use three neurons in the hidden layer. This means that WI and WO will be 8×3 and 3×8 matrices, respectively. Before training begins, these matrices are initialized to small random values as is usual in neural network training. Just for the illustration sake, let us assume WI and WO to be initialized to the following values:</p>
 <p><figure>
   
-    <img class="docimage" src="/Bits-and-Bytes-of-NLP/images/copied_from_nb/my_icons/topic_3.2.d.png" alt="" />
+    <img class="docimage" src="/Bits-and-Bytes-of-NLP/images/copied_from_nb/my_icons/topic_3.2.d.png" alt="">
     
     
 </figure>
@@ -427,10 +474,10 @@ corresponding context words.</p>
 <p><strong>Ht = XtWI = [-0.490796 -0.229903 0.065460]</strong></p>
 <p>It should not surprise us that the vector H of hidden neuron outputs mimics the weights of the second row of WI matrix because of 1-out-of-V representation. So the function of the input to hidden layer connections is basically to copy the input word vector to hidden layer. Carrying out similar manipulations for hidden to output layer, the activation vector for output layer neurons can be written as</p>
 <p><strong>HtWO = [0.100934  -0.309331  -0.122361  -0.151399   0.143463  -0.051262  -0.079686   0.112928]</strong></p>
-<p>now we will use the formula<br />
+<p>now we will use the formula<br>
 <figure>
   
-    <img class="docimage" src="/Bits-and-Bytes-of-NLP/images/copied_from_nb/my_icons/topic_3.2.e.png" alt="" />
+    <img class="docimage" src="/Bits-and-Bytes-of-NLP/images/copied_from_nb/my_icons/topic_3.2.e.png" alt="">
     
     
 </figure>
@@ -442,7 +489,7 @@ corresponding context words.</p>
 <p><strong>[An alert reader pointed that the figure below might lead some readers to think that CBOW learning uses several input matrices. It is not so. It is the same matrix, WI, that is receiving multiple input vectors representing different context words]</strong></p>
 <p><figure>
   
-    <img class="docimage" src="/Bits-and-Bytes-of-NLP/images/copied_from_nb/my_icons/topic_3.2.f.png" alt="" />
+    <img class="docimage" src="/Bits-and-Bytes-of-NLP/images/copied_from_nb/my_icons/topic_3.2.f.png" alt="">
     
     
 </figure>
@@ -451,7 +498,8 @@ corresponding context words.</p>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>I can understand that things can be little hazy at first.But if you read this one more time it will be crystal clear.</p>
 <p>In the next blog i will cover skip-gram and other text representation technique.</p>
@@ -459,10 +507,12 @@ corresponding context words.</p>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><div class="footnotes"><p id="fn-1">1. Notes are compiled from <a href="https://www.oreilly.com/library/view/practical-natural-language/9781492054047/"> Practical Natural Language Processing: A Comprehensive Guide to Building Real-World NLP Systems</a>, <a href="https://towardsdatascience.com/word-embeddings-for-nlp-5b72991e01d4">Medium</a>,<a href="https://iksinc.online/tag/continuous-bag-of-words-cbow/#:~:text=In%20the%20continuous%20bag%20of,to%20the%20neural%20network%20architecture.">CBOW and Skip-gram</a> and <a href="https://github.com/practical-nlp/practical-nlp/tree/master/Ch3">Code from github repo</a><a href="#fnref-1" class="footnote footnotes">↩</a></p></div>
-<div class="footnotes"><p id="fn-2">2. If you face any problem or have any feedback/suggestions feel free to comment.<a href="#fnref-2" class="footnote footnotes">↩</a></p></div></p>
+<p></p>
+<div class="footnotes"><p id="fn-1">1. Notes are compiled from <a href="https://www.oreilly.com/library/view/practical-natural-language/9781492054047/"> Practical Natural Language Processing: A Comprehensive Guide to Building Real-World NLP Systems</a>, <a href="https://towardsdatascience.com/word-embeddings-for-nlp-5b72991e01d4">Medium</a>,<a href="https://iksinc.online/tag/continuous-bag-of-words-cbow/#:~:text=In%20the%20continuous%20bag%20of,to%20the%20neural%20network%20architecture.">CBOW and Skip-gram</a> and <a href="https://github.com/practical-nlp/practical-nlp/tree/master/Ch3">Code from github repo</a><a href="#fnref-1" class="footnote footnotes">↩</a></p></div>
+<div class="footnotes"><p id="fn-2">2. If you face any problem or have any feedback/suggestions feel free to comment.<a href="#fnref-2" class="footnote footnotes">↩</a></p></div>
 
 </div>
 </div>
@@ -471,7 +521,15 @@ corresponding context words.</p>
 
 
 
-  </div><a class="u-url" href="/Bits-and-Bytes-of-NLP/2021/02/01/_02_1_Text_Representation(PART_2).html" hidden></a>
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="ShubhangiDabral13/Bits-and-Bytes-of-NLP"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/Bits-and-Bytes-of-NLP/basic-nlp/2021/02/01/_02_1_Text_Representation(PART_2).html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
